@@ -36,6 +36,11 @@ const inddScripts = [
     name: "Check Images",
     description: "Check image resolution in a batch of files",
     path: "checkImages/checkImages.js"
+  },
+  {
+    name: "Gridnik",
+    description: "Place images in a grid (wip, kind of janky)",
+    path: "gridnik/gridnik.js"
   }
 ].sort((a, b) => {
   if (a.name < b.name) return -1
