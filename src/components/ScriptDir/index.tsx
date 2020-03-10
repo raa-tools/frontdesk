@@ -1,20 +1,26 @@
 import React, { ReactElement } from "react"
 
 type PropType = {
-  directoryData: Array<string>
-  title: string
+  dirContents: Array<string>
+  dirName: string
+}
+
+const getCDN = (dir: string, fileName: string): string => {
+  return `https://cdn.jsdelivr.net/gh/raa-scripts/indd/${dir}/${fileName}`
 }
 
 const ScriptDir: React.FC<PropType> = ({
-  directoryData,
-  title,
+  dirContents,
+  dirName,
 }): ReactElement => {
   return (
     <>
-      <h3>{title}</h3>
+      <h3>{dirName}</h3>
       <ul>
-        {directoryData.map((file, i) => (
-          <p key={i}>{file}</p>
+        {dirContents.map((file, i) => (
+          <li key={i}>
+            <a href={getCDN(dirName, file)}>{file}</a>
+          </li>
         ))}
       </ul>
     </>

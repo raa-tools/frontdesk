@@ -12,15 +12,20 @@ const App: React.FC<{}> = (): ReactElement => {
   }, [])
 
   return (
-    <div>
+    <>
+      <h2>RAA InDesign Scripts</h2>
       <ul>
-        {Object.keys(scripts).map((dir, i) =>
-          dir === "z-Archive" || dir === "." ? null : (
-            <ScriptDir key={i} directoryData={scripts[dir]["."]} title={dir} />
+        {Object.keys(scripts).map((dirName, i) =>
+          dirName === "z-Archive" || dirName === "." ? null : (
+            <ScriptDir
+              key={i}
+              dirContents={scripts[dirName]["."]}
+              dirName={dirName}
+            />
           )
         )}
       </ul>
-    </div>
+    </>
   )
 }
 
