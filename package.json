@@ -1,0 +1,23 @@
+{
+  "name": "raa-scripts-landing",
+  "version": "1.0.0",
+  "description": "Landing page for RAA scripts",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raa-scripts/raa-scripts.github.io.git"
+  },
+  "author": "JT",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raa-scripts/raa-scripts.github.io/issues"
+  },
+  "homepage": "https://github.com/raa-scripts/raa-scripts.github.io#readme",
+  "dependencies": {
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
+  }
+}
