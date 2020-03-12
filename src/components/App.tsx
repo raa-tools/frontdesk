@@ -12,10 +12,14 @@ const App: React.FC<{}> = (): ReactElement => {
   useEffect((): void => {
     const loadRepos = async (): Promise<void> => {
       for (const source of repoSources) {
-        const json = await (await fetch(source.url)).json()
-        setRepos(prev => {
-          return [...prev, { name: source.name, dirs: json }]
-        })
+        try {
+          const json = await (await fetch(source.url)).json()
+          setRepos(prev => {
+            return [...prev, { name: source.name, dirs: json }]
+          })
+        } catch (e) {
+          console.log(`Something went wrong while fetching ${source}: ${e}`)
+        }
       }
       setLoading(false)
     }
