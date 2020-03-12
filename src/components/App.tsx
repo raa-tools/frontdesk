@@ -1,30 +1,38 @@
 import React, { useState, useEffect, ReactElement } from "react"
 
-import ScriptDir from "./ScriptDir"
+import repoSources from "../utils/repoSources"
+
+import Repo from "./Repo"
+import Loading from "./Loading"
 
 const App: React.FC<{}> = (): ReactElement => {
-  const [scripts, setScripts] = useState({})
+  const [repos, setRepos] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect((): void => {
-    fetch("https://raa-operator.herokuapp.com/api/repo/indd")
-      .then(data => data.json())
-      .then(dirs => setScripts(dirs))
+    const loadRepos = async (): Promise<void> => {
+      for (const source of repoSources) {
+        const json = await (await fetch(source.url)).json()
+        setRepos(prev => {
+          return [...prev, { name: source.name, dirs: json }]
+        })
+      }
+      setLoading(false)
+    }
+    loadRepos()
   }, [])
+
+  if (!repos.length) return null
 
   return (
     <>
-      <h2>RAA InDesign Scripts</h2>
-      <ul>
-        {Object.keys(scripts).map((dirName, i) =>
-          dirName === "z-Archive" || dirName === "." ? null : (
-            <ScriptDir
-              key={i}
-              dirContents={scripts[dirName]["."]}
-              dirName={dirName}
-            />
-          )
-        )}
-      </ul>
+      {loading ? (
+        <Loading />
+      ) : (
+        repos.map((repo, i) => (
+          <Repo key={i} repoName={repo.name} dirs={repo.dirs} />
+        ))
+      )}
     </>
   )
 }
