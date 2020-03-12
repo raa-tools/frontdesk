@@ -18,7 +18,9 @@ const App: React.FC<{}> = (): ReactElement => {
             return [...prev, { name: source.name, dirs: json }]
           })
         } catch (e) {
-          console.log(`Something went wrong while fetching ${source}: ${e}`)
+          console.error(
+            `Something went wrong while fetching ${source.name} at ${source.url}: ${e}`
+          )
         }
       }
       setLoading(false)
