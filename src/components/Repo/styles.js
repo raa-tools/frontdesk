@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 const RepoName = styled.div`
   padding: 0.25rem 0.5rem;
   background-color: tomato;
+  cursor: pointer;
 `
 
 const RepoDiv = styled.div`
