@@ -1,3 +1,7 @@
+import joinPath from "./joinPath"
+
+const api = "https://raa-peekachu.herokuapp.com/api/repo/"
+
 type RepoSource = {
   name: string
   url: string
@@ -6,11 +10,7 @@ type RepoSource = {
 const repoSources: Array<RepoSource> = [
   {
     name: "indd",
-    url: "https://raa-operator.herokuapp.com/api/repo/indd",
-  },
-  {
-    name: "operator",
-    url: "https://raa-operator.herokuapp.com/api/repo/operator",
+    url: joinPath(api, "indd"),
   },
 ]
 

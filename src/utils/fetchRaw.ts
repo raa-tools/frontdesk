@@ -1,4 +1,4 @@
-const fetchRaw = async (
+export default async (
   repo: string,
   dir: string,
   file: string
@@ -9,5 +9,3 @@ const fetchRaw = async (
     )
   ).text()
 }
-
-export default fetchRaw
