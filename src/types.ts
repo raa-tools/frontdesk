@@ -9,7 +9,6 @@ export type CheckedList = {
 }
 
 // Recursive definition
-type DirType = { "."?: Array<string> } | Dir
 export type Dir = {
-  [key: string]: DirType
+  [key: string]: Dir | Array<string>
 }
