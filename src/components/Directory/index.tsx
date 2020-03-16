@@ -1,22 +1,28 @@
-import React, { ReactElement, useState, useEffect } from "react"
+import React, { ReactElement, useState, useEffect, ChangeEvent } from "react"
 import ReactMarkdown from "react-markdown"
 
-import { H3, LI } from "../globals"
+import { H3 } from "../globals"
 import { ScriptsDiv, ScriptsUL, ScriptName } from "./styles"
 
-import getCDN from "../../utils/getCDN"
+import ScriptItem from "../ScriptItem"
+
 import fetchRaw from "../../utils/fetchRaw"
+import { CheckedList } from "../../types"
 
 type PropType = {
   repo: string
   dirContents: Array<string>
   dirName: string
+  checkedItems: CheckedList
+  handleSelect(e: ChangeEvent<HTMLInputElement>): void
 }
 
 const ScriptDir: React.FC<PropType> = ({
   repo,
   dirContents,
   dirName,
+  handleSelect,
+  checkedItems,
 }): ReactElement => {
   const readmeFile = dirContents.find(filename => filename === "readme.md")
   const scriptFiles = dirContents.filter(filename => filename !== "readme.md")
@@ -34,12 +40,11 @@ const ScriptDir: React.FC<PropType> = ({
         }
       }
     }
-
     fetchReadme()
   }, [])
 
   return (
-    <>
+    <div className="directory">
       <ScriptName>
         <H3 onClick={(): void => setOpen(prev => !prev)}>{dirName}</H3>
       </ScriptName>
@@ -47,13 +52,18 @@ const ScriptDir: React.FC<PropType> = ({
         {readme ? <ReactMarkdown source={readme} /> : null}
         <ScriptsUL>
           {scriptFiles.map((file, i) => (
-            <LI key={i}>
-              <a href={getCDN(repo, dirName, file)}>{file}</a>
-            </LI>
+            <ScriptItem
+              key={i}
+              repo={repo}
+              dirName={dirName}
+              file={file}
+              checkedItems={checkedItems}
+              handleChange={handleSelect}
+            />
           ))}
         </ScriptsUL>
       </ScriptsDiv>
-    </>
+    </div>
   )
 }
 
