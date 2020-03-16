@@ -1,23 +1,29 @@
-import React, { ReactElement, useState } from "react"
+import React, { ReactElement, useState, ChangeEvent } from "react"
 
 import { H2 } from "../globals"
 import { RepoName, RepoDiv, DirsDiv } from "./styles"
+
 import Directory from "../Directory"
 
-type Dir = {
-  ["."]?: Array<string>
-}
+import { Dir, CheckedList } from "../../types"
 
 type PropTypes = {
   repoName: string
   dirs: Dir
+  checkedItems: CheckedList
+  handleSelect(e: ChangeEvent<HTMLInputElement>): void
 }
 
-const Repo: React.FC<PropTypes> = ({ repoName, dirs }): ReactElement => {
+const Repo: React.FC<PropTypes> = ({
+  repoName,
+  dirs,
+  checkedItems,
+  handleSelect,
+}): ReactElement => {
   const [open, setOpen] = useState(true)
 
   return (
-    <RepoDiv>
+    <RepoDiv className="repo">
       <RepoName>
         <H2 onClick={(): void => setOpen(prev => !prev)}>{repoName}</H2>
       </RepoName>
@@ -31,6 +37,8 @@ const Repo: React.FC<PropTypes> = ({ repoName, dirs }): ReactElement => {
               repo={repoName}
               dirContents={dirContents}
               dirName={dirName}
+              checkedItems={checkedItems}
+              handleSelect={handleSelect}
             />
           )
         })}
