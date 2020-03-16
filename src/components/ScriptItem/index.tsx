@@ -1,6 +1,8 @@
 import React, { ReactElement, ChangeEvent } from "react"
 
 import { LI } from "../globals"
+import { StyledInput } from "./styles.js"
+
 import { CheckedList } from "../../types"
 
 type PropTypes = {
@@ -22,7 +24,7 @@ const ScriptItem: React.FC<PropTypes> = ({
   return (
     <LI>
       <label>
-        <input
+        <StyledInput
           type="checkbox"
           id={jsonID}
           name={jsonID}
