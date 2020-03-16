@@ -29,4 +29,12 @@ const LI = styled.li`
   font-family: sans-serif;
 `
 
-export { H1, H2, H3, UL, LI }
+const Button = styled.button`
+  font-family: sans-serif;
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+`
+
+export { H1, H2, H3, UL, LI, Button }
