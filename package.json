@@ -4,8 +4,8 @@
   "description": "Landing page for RAA scripts",
   "main": "index.html",
   "scripts": {
-    "dev": "parcel src/index.html --out-dir dev/",
-    "build": "rm src.*.js && rm src.*.js.map && parcel build src/index.html --out-dir ./ --public-url ./"
+    "dev": "parcel ./src/index.html --out-dir ./dev",
+    "build": "parcel build ./src/index.jsx --out-dir ./public"
   },
   "repository": {
     "type": "git",
