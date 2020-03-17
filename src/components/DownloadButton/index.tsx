@@ -30,7 +30,7 @@ const DownloadButton: React.FC<PropTypes> = ({
   }, [paths])
 
   return (
-    <a href={`https://raa-zipline.herokuapp.com/?${queryString}`}>
+    <a href={`https://raa-zipline.herokuapp.com/get?${queryString}`}>
       <DownloadBtn onClick={handleClick}>Download</DownloadBtn>
     </a>
   )
