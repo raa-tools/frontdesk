@@ -1,8 +1,9 @@
 import React, { ReactElement, useState, useEffect } from "react"
 
 import { DownloadBtn } from "./styles"
-
 import { CheckedList } from "../../types"
+
+import getDateTime from "../../utils/getDateTime"
 
 type PropTypes = {
   paths: CheckedList
@@ -15,7 +16,7 @@ const DownloadButton: React.FC<PropTypes> = ({
 }): ReactElement => {
   const [queryString, setQueryString] = useState("")
   useEffect(() => {
-    const newQueryString = Object.keys(paths).reduce((acc, key, i) => {
+    const downloadQuery = Object.keys(paths).reduce((acc, key, i) => {
       const { repo, dirName, file } = JSON.parse(key)
       const query = `user=raa-tools&repo=${repo}&file=${dirName}%2F${file}`
       if (i === 0) {
@@ -26,7 +27,7 @@ const DownloadButton: React.FC<PropTypes> = ({
       return acc
     }, "")
 
-    setQueryString(newQueryString)
+    setQueryString(`${downloadQuery}&id=${getDateTime()}`)
   }, [paths])
 
   return (
