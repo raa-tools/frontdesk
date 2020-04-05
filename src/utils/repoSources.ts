@@ -1,6 +1,9 @@
 import joinPath from "./joinPath"
 
-const api = "https://raa-peekachu.herokuapp.com/api/repo/"
+const peekachuAPI = "https://raa-peekachu.herokuapp.com/api/"
+export const ziplineAPI = `https://raa-zipline.herokuapp.com/api/`
+
+const repoAPI = joinPath(peekachuAPI, "repo")
 
 type RepoSource = {
   name: string
@@ -10,7 +13,11 @@ type RepoSource = {
 const repoSources: Array<RepoSource> = [
   {
     name: "indd",
-    url: joinPath(api, "indd"),
+    url: joinPath(repoAPI, "indd"),
+  },
+  {
+    name: "py",
+    url: joinPath(repoAPI, "py"),
   },
 ]
 
