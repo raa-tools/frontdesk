@@ -4,6 +4,8 @@ import { DownloadBtn } from "./styles"
 import { CheckedList } from "../../types"
 
 import getDateTime from "../../utils/getDateTime"
+import joinPath from "../../utils/joinPath"
+import { ziplineAPI } from "../../utils/repoSources"
 
 type PropTypes = {
   paths: CheckedList
@@ -31,7 +33,7 @@ const DownloadButton: React.FC<PropTypes> = ({
   }, [paths])
 
   return (
-    <a href={`https://raa-zipline.herokuapp.com/get?${queryString}`}>
+    <a href={joinPath(ziplineAPI, `/get?${queryString}`)}>
       <DownloadBtn onClick={handleClick}>Download</DownloadBtn>
     </a>
   )
