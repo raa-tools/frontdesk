@@ -29,7 +29,9 @@ const DownloadButton: React.FC<PropTypes> = ({
       return acc
     }, "")
 
-    setQueryString(`${downloadQuery}&id=${getDateTime()}`)
+    if (downloadQuery) {
+      setQueryString(`${downloadQuery}&id=${getDateTime()}`)
+    }
   }, [paths])
 
   return queryString ? (
