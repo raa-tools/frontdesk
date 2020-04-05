@@ -32,11 +32,11 @@ const DownloadButton: React.FC<PropTypes> = ({
     setQueryString(`${downloadQuery}&id=${getDateTime()}`)
   }, [paths])
 
-  return (
+  return queryString ? (
     <a href={joinPath(ziplineAPI, `/get?${queryString}`)}>
       <DownloadBtn onClick={handleClick}>Download</DownloadBtn>
     </a>
-  )
+  ) : null
 }
 
 export default DownloadButton
