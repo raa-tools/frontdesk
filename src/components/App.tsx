@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ReactElement, ChangeEvent } from "react"
 
-import repoSources from "../utils/repoSources"
+import repoSources, { ziplineAPI } from "../utils/repoSources"
+import joinPath from "../utils/joinPath"
 import { CheckedList } from "../types"
 
 import DownloadButton from "./DownloadButton"
@@ -11,6 +12,10 @@ const App: React.FC<{}> = (): ReactElement => {
   const [repos, setRepos] = useState([])
   useEffect((): void => {
     const loadRepos = async (): Promise<void> => {
+      // Ping zipline to wake server up
+      fetch(joinPath(ziplineAPI, "ping"))
+
+      // Get repos info from peekachu
       for (const source of repoSources) {
         try {
           const json = await (await fetch(source.url)).json()
@@ -29,7 +34,6 @@ const App: React.FC<{}> = (): ReactElement => {
 
   const [downloadPaths, setDownloadPaths] = useState<CheckedList>({})
   const handleSelect = (e: ChangeEvent<HTMLInputElement>): void => {
-    // const downloadTarget: DownloadTarget = JSON.parse(e.target.id)
     const { id } = e.target
 
     if (e.target.checked) {
