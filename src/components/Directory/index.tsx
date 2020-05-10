@@ -1,67 +1,88 @@
 import React, { ReactElement, useState, useEffect, ChangeEvent } from "react"
-import ReactMarkdown from "react-markdown"
 
-import { H3 } from "../globals"
-import { ScriptsDiv, ScriptsUL, ScriptName } from "./styles"
+// Utils and Types
+import { CheckedList } from "../../types"
+import getGithubUrl from "../../utils/getGithubUrl"
 
+// Components
+import Arrow from "../Arrow"
+import LinkButton from "../LinkButton"
 import ScriptItem from "../ScriptItem"
 
-import fetchRaw from "../../utils/fetchRaw"
-import { CheckedList } from "../../types"
+// Styles
+import {
+  ScriptsDiv,
+  ScriptNameContainer,
+  ScriptName,
+  NameInnerContainer,
+} from "./styles"
 
 type PropType = {
-  repo: string
+  repoName: string
   dirContents: Array<string>
   dirName: string
   checkedItems: CheckedList
   handleSelect(e: ChangeEvent<HTMLInputElement>): void
+  handleOpenCount: (offset: number) => void
 }
 
 const ScriptDir: React.FC<PropType> = ({
-  repo,
+  repoName,
   dirContents,
   dirName,
-  handleSelect,
   checkedItems,
+  handleSelect,
+  handleOpenCount,
 }): ReactElement => {
   const readmeFile = dirContents.find(filename => filename === "readme.md")
   const scriptFiles = dirContents.filter(filename => filename !== "readme.md")
-  const [readme, setReadme] = useState("")
+
   const [open, setOpen] = useState(false)
+  const [clicked, setClicked] = useState(false)
+  const handleOpen = (): void => {
+    setOpen(prev => !prev)
+    setClicked(true)
+  }
 
   useEffect(() => {
-    const fetchReadme = async (): Promise<void> => {
-      if (readmeFile) {
-        try {
-          const text = await fetchRaw(repo, dirName, readmeFile)
-          setReadme(text)
-        } catch (e) {
-          setReadme("Something went wrong... " + e)
-        }
-      }
+    if (!clicked) return
+
+    const numScripts = scriptFiles.length
+    if (open) {
+      handleOpenCount(numScripts)
+    } else {
+      handleOpenCount(-numScripts)
     }
-    fetchReadme()
-  }, [])
+  }, [open])
 
   return (
     <div className="directory">
-      <ScriptName>
-        <H3 onClick={(): void => setOpen(prev => !prev)}>{dirName}</H3>
-      </ScriptName>
-      <ScriptsDiv open={open} count={dirContents.length}>
-        {readme ? <ReactMarkdown source={readme} /> : null}
-        <ScriptsUL>
-          {scriptFiles.map((file, i) => (
-            <ScriptItem
-              key={i}
-              repo={repo}
-              dirName={dirName}
-              file={file}
-              checkedItems={checkedItems}
-              handleChange={handleSelect}
+      <ScriptNameContainer>
+        <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
+          <Arrow open={open} />
+          <ScriptName>{dirName}</ScriptName>
+        </NameInnerContainer>
+
+        <NameInnerContainer>
+          {readmeFile ? (
+            <LinkButton
+              type="readme"
+              href={getGithubUrl(repoName, dirName, readmeFile)}
             />
-          ))}
-        </ScriptsUL>
+          ) : null}
+        </NameInnerContainer>
+      </ScriptNameContainer>
+      <ScriptsDiv open={open} count={scriptFiles.length}>
+        {scriptFiles.map((file, i) => (
+          <ScriptItem
+            key={i}
+            repoName={repoName}
+            dirName={dirName}
+            file={file}
+            checkedItems={checkedItems}
+            handleChange={handleSelect}
+          />
+        ))}
       </ScriptsDiv>
     </div>
   )

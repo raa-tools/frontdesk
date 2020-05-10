@@ -1,30 +1,30 @@
-import styled, { css } from "styled-components"
-import { UL } from "../globals"
+import styled from "styled-components"
 
-const ScriptName = styled.div`
-  padding: 0.25rem 0.5rem;
-  background-color: lightgray;
-  cursor: pointer;
+import { H3 } from "../globals"
+
+export const ScriptNameContainer = styled.div`
+  height: 3rem;
+  border-bottom: 2px solid #e4e4e4;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+  box-sizing: border-box;
 `
-const ScriptsDiv = styled.div`
-  height: ${props => props.count * 1.5 + 0.85}rem;
-  padding: 0 0.5rem 0.5rem 0.5rem;
-  margin-bottom: 0.5rem;
+
+export const NameInnerContainer = styled.div`
+  margin: auto 0;
+  display: flex;
+  height: ${({ content }) => (content && content === "name" ? "100%" : "")};
+  flex: ${props => props.flex};
+`
+
+export const ScriptName = styled(H3)`
+  margin: auto 0;
+`
+
+export const ScriptsDiv = styled.div`
+  height: ${({ open, count }) => (open ? `${count * 3}rem` : 0)};
   overflow-y: hidden;
-  background-color: lightblue;
   transition: height 0.5s;
-
-  ${props =>
-    !props.open &&
-    css`
-      height: 0;
-      padding-bottom: 0;
-    `}
+  padding: 0;
 `
-
-const ScriptsUL = styled(UL)`
-  margin-top: 0.5rem;
-  list-style-type: none;
-`
-
-export { ScriptName, ScriptsDiv, ScriptsUL }
