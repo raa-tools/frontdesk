@@ -1,20 +1,38 @@
 import styled, { css } from "styled-components"
+import { H2 } from "../globals"
 
-const RepoName = styled.div`
-  padding: 0.25rem 0.5rem;
-  background-color: tomato;
-  cursor: pointer;
+export const RepoNameContainer = styled.div`
+  height: 4rem;
+  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  user-select: none;
 `
 
-const RepoDiv = styled.div`
-  width: 50%;
+export const NameInnerContainer = styled.div`
+  margin: auto 0;
+  display: flex;
+  height: ${({ content }) => (content && content === "name" ? "100%" : "")};
+  flex: ${props => props.flex};
+`
+
+export const DirName = styled(H2)`
+  margin: auto 0;
+`
+
+export const RepoDiv = styled.div`
+  width: 66.67%;
   margin: 0 auto;
+  min-width: 29.5rem;
+  max-width: 62rem;
 `
 
-const DirsDiv = styled.div`
+export const DirsDiv = styled.div`
   overflow-y: hidden;
   margin-bottom: 0.5rem;
-  transition: height 0.5s;
+  transition: height ease 0.5s;
+  height: ${props => props.count * 3}rem;
 
   ${props =>
     !props.open &&
@@ -22,5 +40,3 @@ const DirsDiv = styled.div`
       height: 0;
     `}
 `
-
-export { RepoName, RepoDiv, DirsDiv }

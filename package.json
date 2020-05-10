@@ -1,6 +1,6 @@
 {
   "name": "raa-scripts-landing",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "Landing page for RAA scripts",
   "main": "index.html",
   "scripts": {
@@ -28,6 +28,7 @@
     "@babel/preset-react": "^7.8.3",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@types/styled-components": "^5.1.0",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
     "babel": "^6.23.0",

@@ -1,11 +1,22 @@
-import React, { ReactElement, useState, ChangeEvent } from "react"
+import React, { ReactElement, useState, useEffect, ChangeEvent } from "react"
 
-import { H2 } from "../globals"
-import { RepoName, RepoDiv, DirsDiv } from "./styles"
-
-import Directory from "../Directory"
-
+// Utils and Types
 import { Dir, CheckedList } from "../../types"
+import getGithubUrl from "../../utils/getGithubUrl"
+
+// Components
+import Arrow from "../Arrow"
+import Directory from "../Directory"
+import LinkButton from "../LinkButton"
+
+// Styles
+import {
+  RepoNameContainer,
+  NameInnerContainer,
+  DirName,
+  RepoDiv,
+  DirsDiv,
+} from "./styles"
 
 type PropTypes = {
   repoName: string
@@ -20,25 +31,54 @@ const Repo: React.FC<PropTypes> = ({
   checkedItems,
   handleSelect,
 }): ReactElement => {
-  const [open, setOpen] = useState(true)
+  const current = dirs["."] as string[]
+  const readmeFile = current
+    ? current.find(file => file.toLowerCase() === "readme.md")
+    : null
+  const validDirNames = Object.keys(dirs).filter(
+    dir => dir !== "." && dir !== "z-Archive"
+  )
+
+  const [totalDirsOpen, setTotalDirsOpen] = useState(validDirNames.length)
+  const handleOpenCount = (offset: number): void => {
+    setTotalDirsOpen(prev => prev + offset)
+  }
+
+  const [open, setOpen] = useState(false)
+  const handleOpen = (): void => {
+    setOpen(prev => !prev)
+  }
 
   return (
     <RepoDiv className="repo">
-      <RepoName>
-        <H2 onClick={(): void => setOpen(prev => !prev)}>{repoName}</H2>
-      </RepoName>
-      <DirsDiv open={open} count={Object.keys(dirs).length - 2}>
-        {Object.keys(dirs).map((dirName, i) => {
-          if (dirName === "." || dirName === "z-Archive") return null
+      <RepoNameContainer>
+        <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
+          <Arrow open={open} />
+          <DirName>{repoName}</DirName>
+        </NameInnerContainer>
+
+        <NameInnerContainer>
+          {readmeFile ? (
+            <LinkButton
+              type="readme"
+              href={getGithubUrl(repoName, readmeFile)}
+            />
+          ) : null}
+        </NameInnerContainer>
+      </RepoNameContainer>
+
+      <DirsDiv open={open} count={totalDirsOpen}>
+        {validDirNames.map((dirName, i) => {
           const dirContents = dirs[dirName]["."]
           return (
             <Directory
               key={i}
-              repo={repoName}
+              repoName={repoName}
               dirContents={dirContents}
               dirName={dirName}
               checkedItems={checkedItems}
               handleSelect={handleSelect}
+              handleOpenCount={handleOpenCount}
             />
           )
         })}

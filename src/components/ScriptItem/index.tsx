@@ -1,39 +1,72 @@
-import React, { ReactElement, ChangeEvent } from "react"
+import React, { ReactElement, useRef, ChangeEvent } from "react"
 
-import { LI } from "../globals"
-import { StyledInput } from "./styles.js"
-
+// Utils and Types
 import { CheckedList } from "../../types"
+import getGithubUrl from "../../utils/getGithubUrl"
+
+// Components
+import LinkButton from "../LinkButton"
+
+// Styles
+import {
+  Container,
+  StyledInput,
+  InnerContainer,
+  Label,
+  LabelText,
+  CustomCheckbox,
+} from "./styles"
 
 type PropTypes = {
-  repo: string
+  repoName: string
   dirName: string
   file: string
   checkedItems: CheckedList
-  handleChange(e: ChangeEvent<HTMLInputElement>): void
+  handleChange(id: string, checked: boolean): void
 }
 
 const ScriptItem: React.FC<PropTypes> = ({
-  repo,
+  repoName,
   dirName,
   file,
   checkedItems,
   handleChange,
 }): ReactElement => {
-  const jsonID = JSON.stringify({ repo, dirName, file })
+  const inputRef = useRef(null)
+  const jsonID = JSON.stringify({ repoName, dirName, file })
+
   return (
-    <LI>
-      <label>
-        <StyledInput
-          type="checkbox"
-          id={jsonID}
-          name={jsonID}
-          onChange={handleChange}
-          checked={!!checkedItems[jsonID]}
+    <Container>
+      <InnerContainer
+        flex={1}
+        content="label"
+        onClick={(): void => handleChange(jsonID, inputRef.current.checked)}
+      >
+        <Label>
+          <StyledInput
+            ref={inputRef}
+            className="input-checkbox"
+            type="checkbox"
+            id={jsonID}
+            name={jsonID}
+            onChange={(e: ChangeEvent): void => {
+              const target = e.target as HTMLInputElement
+              handleChange(jsonID, target.checked)
+            }}
+            checked={!!checkedItems[jsonID]}
+          />
+          <CustomCheckbox className="custom-checkbox" />
+          <LabelText>{file}</LabelText>
+        </Label>
+      </InnerContainer>
+
+      <InnerContainer>
+        <LinkButton
+          type="github"
+          href={getGithubUrl(repoName, dirName, file)}
         />
-        {file}
-      </label>
-    </LI>
+      </InnerContainer>
+    </Container>
   )
 }
 
