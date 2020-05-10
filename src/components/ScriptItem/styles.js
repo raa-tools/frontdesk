@@ -33,6 +33,7 @@ export const LabelText = styled.span`
   margin: auto 0;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.125rem;
+  padding-bottom: 2px;
 `
 
 // Custom checkbox based on
@@ -73,7 +74,7 @@ export const CustomCheckbox = styled.span`
     content: "";
     position: absolute;
     display: none;
-    top: 1px;
+    top: 0px;
     left: 5px;
     width: 4px;
     height: 10px;

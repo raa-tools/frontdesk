@@ -19,6 +19,7 @@ export const NameInnerContainer = styled.div`
 
 export const DirName = styled(H2)`
   margin: auto 0;
+  padding-bottom: 2px;
 `
 
 export const RepoDiv = styled.div`

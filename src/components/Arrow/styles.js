@@ -7,6 +7,7 @@ export const Container = styled.div`
   margin: auto 0;
   margin-right: 1rem;
   transition: transform ease 0.15s;
+  padding-top: 2px;
 
   ${props =>
     props.open &&

@@ -20,6 +20,7 @@ export const NameInnerContainer = styled.div`
 
 export const ScriptName = styled(H3)`
   margin: auto 0;
+  padding-bottom: 1px;
 `
 
 export const ScriptsDiv = styled.div`
