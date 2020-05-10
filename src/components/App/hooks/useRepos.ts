@@ -4,6 +4,7 @@ import repoSources, { ziplineAPI } from "../../../utils/repoSources"
 import joinPath from "../../../utils/joinPath"
 
 export default (): any[] => {
+  const [loading, setLoading] = useState(true)
   const [repos, setRepos] = useState([])
   useEffect((): void => {
     const loadRepos = async (): Promise<void> => {
@@ -23,9 +24,11 @@ export default (): any[] => {
           )
         }
       }
+
+      setLoading(false)
     }
     loadRepos()
   }, [])
 
-  return repos
+  return [repos, loading]
 }
