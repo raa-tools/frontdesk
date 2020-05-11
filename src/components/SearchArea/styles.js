@@ -12,7 +12,9 @@ export const Title = styled(H1)`
   line-height: 1.1;
 `
 
-export const SearchBox = styled.input`
+export const SearchBox = styled.input.attrs({
+  type: "text",
+})`
   width: 100%;
   height: 2rem;
   margin-top: 1.75rem;

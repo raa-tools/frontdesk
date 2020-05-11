@@ -46,7 +46,6 @@ const ScriptItem: React.FC<PropTypes> = ({
           <StyledInput
             ref={inputRef}
             className="input-checkbox"
-            type="checkbox"
             id={jsonID}
             name={jsonID}
             onChange={(e: ChangeEvent): void => {

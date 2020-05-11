@@ -38,7 +38,9 @@ export const LabelText = styled.span`
 
 // Custom checkbox based on
 // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_checkbox
-export const StyledInput = styled.input`
+export const StyledInput = styled.input.attrs({
+  type: "checkbox",
+})`
   position: absolute;
   width: 0;
   height: 0;
