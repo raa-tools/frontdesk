@@ -12,15 +12,15 @@ type RepoSource = {
 
 const repoSources: Array<RepoSource> = [
   {
-    name: "InDesign Scripts",
+    name: "indd",
     url: joinPath(repoAPI, "indd"),
   },
   {
-    name: "Python Scripts",
+    name: "py",
     url: joinPath(repoAPI, "py"),
   },
   {
-    name: "Node Scripts",
+    name: "node-scripts",
     url: joinPath(repoAPI, "node-scripts"),
   },
 ]
