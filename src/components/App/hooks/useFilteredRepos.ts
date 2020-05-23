@@ -23,20 +23,24 @@ export default (repos): any[] => {
         const repo = repos[key]
         const repoDirs = repo.dirs
 
-        const _filteredDirs = Object.keys(repoDirs).reduce((acc, curr) => {
-          if (Array.isArray(repoDirs[curr])) {
-            const filtered = repoDirs[curr].filter(
+        const _filteredDirs = Object.keys(repoDirs).reduce((acc, dir) => {
+          if (dir.toLowerCase().includes(str.toLowerCase())) {
+            // If search string matches directory,
+            // include all files in that directory
+            acc[dir] = repoDirs[dir]
+          } else if (Array.isArray(repoDirs[dir])) {
+            const filtered = repoDirs[dir].filter(
               (file: string) =>
                 file.toLowerCase().includes(str.toLowerCase()) ||
                 file === "readme.md"
             )
             if (filtered.length) {
-              acc[curr] = filtered
+              acc[dir] = filtered
             }
           } else {
-            const filtered = checkDir(str, repoDirs[curr])
+            const filtered = checkDir(str, repoDirs[dir])
             if (filtered) {
-              acc[curr] = filtered
+              acc[dir] = filtered
             }
           }
           return acc
