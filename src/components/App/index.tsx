@@ -1,4 +1,4 @@
-import React, { useState, ReactElement, KeyboardEvent } from "react"
+import React, { useState, useEffect, ReactElement, KeyboardEvent } from "react"
 
 // Utils and Types
 import { CheckedList } from "../../types"
@@ -40,6 +40,40 @@ const App: React.FC<{}> = (): ReactElement => {
     filterRepos(target.value)
   }
 
+  const [reposOpen, setReposOpen] = useState({})
+  const [dirsOpen, setDirsOpen] = useState({})
+  useEffect(() => {
+    const reposInitialState = repos.reduce((acc, repo) => {
+      acc[repo.name] = false
+      return acc
+    }, {})
+
+    const dirsInitialState = repos.reduce((acc, repo) => {
+      const validDirs = Object.keys(repo.dirs).filter(item => item !== ".")
+      const dirObj = validDirs.reduce((dirAcc, dir) => {
+        dirAcc[dir] = false
+        return dirAcc
+      }, {})
+
+      return { ...acc, [repo.name]: dirObj }
+    }, {})
+
+    setReposOpen(reposInitialState)
+    setDirsOpen(dirsInitialState)
+  }, [repos])
+
+  const handleRepoDropdown = (repoName: string): void => {
+    const newState = { ...reposOpen }
+    newState[repoName] = !newState[repoName]
+    setReposOpen(newState)
+  }
+
+  const handleDirDropdown = (repoName: string, dirName: string): void => {
+    const newState = { ...dirsOpen }
+    newState[repoName][dirName] = !newState[repoName][dirName]
+    setDirsOpen(newState)
+  }
+
   return (
     <>
       <Loading loading={loading} />
@@ -51,7 +85,11 @@ const App: React.FC<{}> = (): ReactElement => {
           <Listing
             repos={filteredRepos}
             checkedItems={downloadPaths}
+            reposOpen={reposOpen}
+            dirsOpen={dirsOpen}
             handleSelect={handleSelect}
+            handleRepoDropdown={handleRepoDropdown}
+            handleDirDropdown={handleDirDropdown}
           />
           <DownloadButtonArea
             paths={downloadPaths}

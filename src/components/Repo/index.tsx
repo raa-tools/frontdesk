@@ -22,14 +22,22 @@ type PropTypes = {
   repoName: string
   dirs: Dir
   checkedItems: CheckedList
-  handleSelect(e: ChangeEvent<HTMLInputElement>): void
+  reposOpen: any
+  dirsOpen: any
+  handleSelect(id: string, checked: boolean): void
+  handleRepoDropdown(repoName: string): void
+  handleDirDropdown(repoName: string, dirName: string): void
 }
 
 const Repo: React.FC<PropTypes> = ({
   repoName,
   dirs,
   checkedItems,
+  reposOpen,
+  dirsOpen,
   handleSelect,
+  handleRepoDropdown,
+  handleDirDropdown,
 }): ReactElement => {
   const current = dirs["."] as string[]
   const readmeFile = current
@@ -44,16 +52,15 @@ const Repo: React.FC<PropTypes> = ({
     setTotalDirsOpen(prev => prev + offset)
   }
 
-  const [open, setOpen] = useState(false)
   const handleOpen = (): void => {
-    setOpen(prev => !prev)
+    handleRepoDropdown(repoName)
   }
 
   return (
     <RepoDiv className="repo">
       <RepoNameContainer>
         <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
-          <Arrow open={open} />
+          <Arrow open={reposOpen[repoName]} />
           <DirName>{repoName}</DirName>
         </NameInnerContainer>
 
@@ -67,7 +74,7 @@ const Repo: React.FC<PropTypes> = ({
         </NameInnerContainer>
       </RepoNameContainer>
 
-      <DirsDiv open={open} count={totalDirsOpen}>
+      <DirsDiv open={reposOpen[repoName]} count={totalDirsOpen}>
         {validDirNames.map((dirName, i) => {
           const dirContents = dirs[dirName]["."]
           return (
@@ -77,8 +84,10 @@ const Repo: React.FC<PropTypes> = ({
               dirContents={dirContents}
               dirName={dirName}
               checkedItems={checkedItems}
+              dirsOpen={dirsOpen}
               handleSelect={handleSelect}
               handleOpenCount={handleOpenCount}
+              handleDirDropdown={handleDirDropdown}
             />
           )
         })}
