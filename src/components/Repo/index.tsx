@@ -51,28 +51,34 @@ const Repo: React.FC<PropTypes> = ({
     handleRepoDropdown(repoName)
   }
 
-  const [totalDirsOpen, setTotalDirsOpen] = useState(0)
+  const initialVisibleDirs = { all: 0, open: 0 }
+  const [totalVisibleDirs, setTotalVisibleDirs] = useState(initialVisibleDirs)
   useEffect(() => {
-    const total = validDirNames.reduce((acc: number, dirName: string) => {
-      const dirContents = dirs[dirName]["."]
-      const scriptFiles = dirContents.filter(
-        (filename: string) => filename !== "readme.md"
-      )
+    const total = validDirNames.reduce(
+      (acc: { all: number; open: number }, dirName: string) => {
+        const dirContents = dirs[dirName]["."]
+        const scriptFiles = dirContents.filter(
+          (filename: string) => filename !== "readme.md"
+        )
 
-      if (reposOpen[repoName] && scriptFiles.length) {
-        acc += 1
-      }
+        if (reposOpen[repoName] && scriptFiles.length) {
+          acc.open += 1
+        }
 
-      if (dirsOpen[repoName][dirName]) {
-        acc += scriptFiles.length
-      }
-      return acc
-    }, 0)
+        if (dirsOpen[repoName][dirName]) {
+          acc.open += scriptFiles.length
+        }
 
-    setTotalDirsOpen(total)
+        acc.all += scriptFiles.length
+        return acc
+      },
+      initialVisibleDirs
+    )
+
+    setTotalVisibleDirs(total)
   }, [dirs, reposOpen, dirsOpen])
 
-  return (
+  return totalVisibleDirs.all <= 0 ? null : (
     <RepoDiv className="repo">
       <RepoNameContainer>
         <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
@@ -90,7 +96,7 @@ const Repo: React.FC<PropTypes> = ({
         </NameInnerContainer>
       </RepoNameContainer>
 
-      <DirsDiv open={reposOpen[repoName]} count={totalDirsOpen}>
+      <DirsDiv open={reposOpen[repoName]} count={totalVisibleDirs.open}>
         {validDirNames.map((dirName, i) => {
           const dirContents = dirs[dirName]["."]
           return (
