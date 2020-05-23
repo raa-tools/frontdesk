@@ -10,9 +10,11 @@ export default (repos): any[] => {
     const checkDir = (str: string, dir: {}): {} => {
       if (!dir["."]) return
 
-      const _filtered = dir["."].filter((file: string) =>
-        file.toLowerCase().includes(str.toLowerCase())
+      const _filtered = dir["."].filter(
+        (file: string) =>
+          file.toLowerCase().includes(str.toLowerCase()) || file === "readme.md"
       )
+
       return _filtered.length ? { ".": _filtered } : null
     }
 
@@ -23,8 +25,10 @@ export default (repos): any[] => {
 
         const _filteredDirs = Object.keys(repoDirs).reduce((acc, curr) => {
           if (Array.isArray(repoDirs[curr])) {
-            const filtered = repoDirs[curr].filter((file: string) =>
-              file.toLowerCase().includes(str.toLowerCase())
+            const filtered = repoDirs[curr].filter(
+              (file: string) =>
+                file.toLowerCase().includes(str.toLowerCase()) ||
+                file === "readme.md"
             )
             if (filtered.length) {
               acc[curr] = filtered
