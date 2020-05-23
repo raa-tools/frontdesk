@@ -24,7 +24,6 @@ type PropType = {
   checkedItems: CheckedList
   dirsOpen: any
   handleSelect(id: string, checked: boolean): void
-  handleOpenCount(offset: number): void
   handleDirDropdown(repoName: string, dirName: string): void
 }
 
@@ -35,28 +34,16 @@ const ScriptDir: React.FC<PropType> = ({
   checkedItems,
   dirsOpen,
   handleSelect,
-  handleOpenCount,
   handleDirDropdown,
 }): ReactElement => {
   const readmeFile = dirContents.find(filename => filename === "readme.md")
   const scriptFiles = dirContents.filter(filename => filename !== "readme.md")
 
-  const [clicked, setClicked] = useState(false)
+  if (!scriptFiles.length) return null
+
   const handleOpen = (): void => {
-    setClicked(true)
     handleDirDropdown(repoName, dirName)
   }
-
-  useEffect(() => {
-    if (!clicked) return
-
-    const numScripts = scriptFiles.length
-    if (dirsOpen[repoName][dirName]) {
-      handleOpenCount(numScripts)
-    } else {
-      handleOpenCount(-numScripts)
-    }
-  }, [dirsOpen])
 
   return (
     <div className="directory">

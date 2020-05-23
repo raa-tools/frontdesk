@@ -47,14 +47,30 @@ const Repo: React.FC<PropTypes> = ({
     dir => dir !== "." && dir !== "z-Archive"
   )
 
-  const [totalDirsOpen, setTotalDirsOpen] = useState(validDirNames.length)
-  const handleOpenCount = (offset: number): void => {
-    setTotalDirsOpen(prev => prev + offset)
-  }
-
   const handleOpen = (): void => {
     handleRepoDropdown(repoName)
   }
+
+  const [totalDirsOpen, setTotalDirsOpen] = useState(0)
+  useEffect(() => {
+    const total = validDirNames.reduce((acc: number, dirName: string) => {
+      const dirContents = dirs[dirName]["."]
+      const scriptFiles = dirContents.filter(
+        (filename: string) => filename !== "readme.md"
+      )
+
+      if (reposOpen[repoName] && scriptFiles.length) {
+        acc += 1
+      }
+
+      if (dirsOpen[repoName][dirName]) {
+        acc += scriptFiles.length
+      }
+      return acc
+    }, 0)
+
+    setTotalDirsOpen(total)
+  }, [dirs, reposOpen, dirsOpen])
 
   return (
     <RepoDiv className="repo">
@@ -86,7 +102,6 @@ const Repo: React.FC<PropTypes> = ({
               checkedItems={checkedItems}
               dirsOpen={dirsOpen}
               handleSelect={handleSelect}
-              handleOpenCount={handleOpenCount}
               handleDirDropdown={handleDirDropdown}
             />
           )
