@@ -1,8 +1,8 @@
-import React, { useState, ReactElement, KeyboardEvent } from "react"
+import React, { useState, useEffect, ReactElement, KeyboardEvent } from "react"
 
 // Utils and Types
 import { CheckedList } from "../../types"
-import { useRepos, useFilteredRepos } from "./hooks"
+import { useDropdown, useFilteredRepos, useRepos } from "./hooks"
 
 // Components
 import DownloadButtonArea from "../DownloadButtonArea"
@@ -15,6 +15,12 @@ import { Container, RightSection, LeftSection } from "./styles"
 
 const App: React.FC<{}> = (): ReactElement => {
   const [repos, loading] = useRepos()
+  const {
+    reposOpen,
+    handleRepoDropdown,
+    dirsOpen,
+    handleDirDropdown,
+  } = useDropdown(repos)
 
   const [downloadPaths, setDownloadPaths] = useState<CheckedList>({})
   const handleSelect = (id: string, checked: boolean): void => {
@@ -51,7 +57,11 @@ const App: React.FC<{}> = (): ReactElement => {
           <Listing
             repos={filteredRepos}
             checkedItems={downloadPaths}
+            reposOpen={reposOpen}
+            dirsOpen={dirsOpen}
             handleSelect={handleSelect}
+            handleRepoDropdown={handleRepoDropdown}
+            handleDirDropdown={handleDirDropdown}
           />
           <DownloadButtonArea
             paths={downloadPaths}

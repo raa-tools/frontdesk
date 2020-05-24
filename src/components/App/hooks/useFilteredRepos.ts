@@ -10,9 +10,11 @@ export default (repos): any[] => {
     const checkDir = (str: string, dir: {}): {} => {
       if (!dir["."]) return
 
-      const _filtered = dir["."].filter((file: string) =>
-        file.toLowerCase().includes(str.toLowerCase())
+      const _filtered = dir["."].filter(
+        (file: string) =>
+          file.toLowerCase().includes(str.toLowerCase()) || file === "readme.md"
       )
+
       return _filtered.length ? { ".": _filtered } : null
     }
 
@@ -21,18 +23,24 @@ export default (repos): any[] => {
         const repo = repos[key]
         const repoDirs = repo.dirs
 
-        const _filteredDirs = Object.keys(repoDirs).reduce((acc, curr) => {
-          if (Array.isArray(repoDirs[curr])) {
-            const filtered = repoDirs[curr].filter((file: string) =>
-              file.toLowerCase().includes(str.toLowerCase())
+        const _filteredDirs = Object.keys(repoDirs).reduce((acc, dir) => {
+          if (dir.toLowerCase().includes(str.toLowerCase())) {
+            // If search string matches directory,
+            // include all files in that directory
+            acc[dir] = repoDirs[dir]
+          } else if (Array.isArray(repoDirs[dir])) {
+            const filtered = repoDirs[dir].filter(
+              (file: string) =>
+                file.toLowerCase().includes(str.toLowerCase()) ||
+                file === "readme.md"
             )
             if (filtered.length) {
-              acc[curr] = filtered
+              acc[dir] = filtered
             }
           } else {
-            const filtered = checkDir(str, repoDirs[curr])
+            const filtered = checkDir(str, repoDirs[dir])
             if (filtered) {
-              acc[curr] = filtered
+              acc[dir] = filtered
             }
           }
           return acc

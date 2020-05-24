@@ -3,7 +3,15 @@ import React, { ReactElement } from "react"
 import Repo from "../Repo"
 import { Container } from "./styles"
 
-const Listing = ({ repos, checkedItems, handleSelect }): ReactElement => {
+const Listing = ({
+  repos,
+  checkedItems,
+  reposOpen,
+  dirsOpen,
+  handleSelect,
+  handleRepoDropdown,
+  handleDirDropdown,
+}): ReactElement => {
   return (
     <Container>
       {repos.map((repo, i) => {
@@ -13,7 +21,11 @@ const Listing = ({ repos, checkedItems, handleSelect }): ReactElement => {
             repoName={repo.name}
             dirs={repo.dirs}
             checkedItems={checkedItems}
+            reposOpen={reposOpen}
+            dirsOpen={dirsOpen}
             handleSelect={handleSelect}
+            handleRepoDropdown={handleRepoDropdown}
+            handleDirDropdown={handleDirDropdown}
           />
         )
       })}

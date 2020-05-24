@@ -22,8 +22,9 @@ type PropType = {
   dirContents: Array<string>
   dirName: string
   checkedItems: CheckedList
-  handleSelect(e: ChangeEvent<HTMLInputElement>): void
-  handleOpenCount: (offset: number) => void
+  dirsOpen: any
+  handleSelect(id: string, checked: boolean): void
+  handleDirDropdown(repoName: string, dirName: string): void
 }
 
 const ScriptDir: React.FC<PropType> = ({
@@ -31,35 +32,24 @@ const ScriptDir: React.FC<PropType> = ({
   dirContents,
   dirName,
   checkedItems,
+  dirsOpen,
   handleSelect,
-  handleOpenCount,
+  handleDirDropdown,
 }): ReactElement => {
   const readmeFile = dirContents.find(filename => filename === "readme.md")
   const scriptFiles = dirContents.filter(filename => filename !== "readme.md")
 
-  const [open, setOpen] = useState(false)
-  const [clicked, setClicked] = useState(false)
+  if (!scriptFiles.length) return null
+
   const handleOpen = (): void => {
-    setOpen(prev => !prev)
-    setClicked(true)
+    handleDirDropdown(repoName, dirName)
   }
-
-  useEffect(() => {
-    if (!clicked) return
-
-    const numScripts = scriptFiles.length
-    if (open) {
-      handleOpenCount(numScripts)
-    } else {
-      handleOpenCount(-numScripts)
-    }
-  }, [open])
 
   return (
     <div className="directory">
       <ScriptNameContainer>
         <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
-          <Arrow open={open} />
+          <Arrow open={dirsOpen[repoName][dirName]} />
           <ScriptName>{dirName}</ScriptName>
         </NameInnerContainer>
 
@@ -72,7 +62,7 @@ const ScriptDir: React.FC<PropType> = ({
           ) : null}
         </NameInnerContainer>
       </ScriptNameContainer>
-      <ScriptsDiv open={open} count={scriptFiles.length}>
+      <ScriptsDiv open={dirsOpen[repoName][dirName]} count={scriptFiles.length}>
         {scriptFiles.map((file, i) => (
           <ScriptItem
             key={i}

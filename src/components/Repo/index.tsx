@@ -22,14 +22,22 @@ type PropTypes = {
   repoName: string
   dirs: Dir
   checkedItems: CheckedList
-  handleSelect(e: ChangeEvent<HTMLInputElement>): void
+  reposOpen: any
+  dirsOpen: any
+  handleSelect(id: string, checked: boolean): void
+  handleRepoDropdown(repoName: string): void
+  handleDirDropdown(repoName: string, dirName: string): void
 }
 
 const Repo: React.FC<PropTypes> = ({
   repoName,
   dirs,
   checkedItems,
+  reposOpen,
+  dirsOpen,
   handleSelect,
+  handleRepoDropdown,
+  handleDirDropdown,
 }): ReactElement => {
   const current = dirs["."] as string[]
   const readmeFile = current
@@ -39,21 +47,42 @@ const Repo: React.FC<PropTypes> = ({
     dir => dir !== "." && dir !== "z-Archive"
   )
 
-  const [totalDirsOpen, setTotalDirsOpen] = useState(validDirNames.length)
-  const handleOpenCount = (offset: number): void => {
-    setTotalDirsOpen(prev => prev + offset)
-  }
-
-  const [open, setOpen] = useState(false)
   const handleOpen = (): void => {
-    setOpen(prev => !prev)
+    handleRepoDropdown(repoName)
   }
 
-  return (
+  const initialVisibleDirs = { all: 0, open: 0 }
+  const [totalDirs, setTotalDirs] = useState(0)
+  const [totalOpenDirs, setTotalOpenDirs] = useState(0)
+  useEffect(() => {
+    let _totalDirs = 0
+    let _totalOpenDirs = 0
+    validDirNames.forEach((dirName: string) => {
+      const dirContents = dirs[dirName]["."]
+      const scriptFiles = dirContents.filter(
+        (filename: string) => filename !== "readme.md"
+      )
+
+      if (reposOpen[repoName] && scriptFiles.length) {
+        _totalOpenDirs += 1
+
+        if (dirsOpen[repoName][dirName]) {
+          _totalOpenDirs += scriptFiles.length
+        }
+      }
+
+      _totalDirs += scriptFiles.length
+    })
+
+    setTotalDirs(_totalDirs)
+    setTotalOpenDirs(_totalOpenDirs)
+  }, [dirs, reposOpen, dirsOpen])
+
+  return totalDirs <= 0 ? null : (
     <RepoDiv className="repo">
       <RepoNameContainer>
         <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
-          <Arrow open={open} />
+          <Arrow open={reposOpen[repoName]} />
           <DirName>{repoName}</DirName>
         </NameInnerContainer>
 
@@ -67,7 +96,7 @@ const Repo: React.FC<PropTypes> = ({
         </NameInnerContainer>
       </RepoNameContainer>
 
-      <DirsDiv open={open} count={totalDirsOpen}>
+      <DirsDiv open={reposOpen[repoName]} count={totalOpenDirs}>
         {validDirNames.map((dirName, i) => {
           const dirContents = dirs[dirName]["."]
           return (
@@ -77,8 +106,9 @@ const Repo: React.FC<PropTypes> = ({
               dirContents={dirContents}
               dirName={dirName}
               checkedItems={checkedItems}
+              dirsOpen={dirsOpen}
               handleSelect={handleSelect}
-              handleOpenCount={handleOpenCount}
+              handleDirDropdown={handleDirDropdown}
             />
           )
         })}
