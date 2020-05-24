@@ -20,8 +20,8 @@ const repoSources: Array<RepoSource> = [
     url: joinPath(repoAPI, "py"),
   },
   {
-    name: "node-scripts",
-    url: joinPath(repoAPI, "node-scripts"),
+    name: "nodeJS",
+    url: joinPath(repoAPI, "nodeJS"),
   },
 ]
 
