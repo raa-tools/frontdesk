@@ -52,33 +52,33 @@ const Repo: React.FC<PropTypes> = ({
   }
 
   const initialVisibleDirs = { all: 0, open: 0 }
-  const [totalVisibleDirs, setTotalVisibleDirs] = useState(initialVisibleDirs)
+  const [totalDirs, setTotalDirs] = useState(0)
+  const [totalOpenDirs, setTotalOpenDirs] = useState(0)
   useEffect(() => {
-    const total = validDirNames.reduce(
-      (acc: { all: number; open: number }, dirName: string) => {
-        const dirContents = dirs[dirName]["."]
-        const scriptFiles = dirContents.filter(
-          (filename: string) => filename !== "readme.md"
-        )
+    let _totalDirs = 0
+    let _totalOpenDirs = 0
+    validDirNames.forEach((dirName: string) => {
+      const dirContents = dirs[dirName]["."]
+      const scriptFiles = dirContents.filter(
+        (filename: string) => filename !== "readme.md"
+      )
 
-        if (reposOpen[repoName] && scriptFiles.length) {
-          acc.open += 1
-        }
+      if (reposOpen[repoName] && scriptFiles.length) {
+        _totalOpenDirs += 1
 
         if (dirsOpen[repoName][dirName]) {
-          acc.open += scriptFiles.length
+          _totalOpenDirs += scriptFiles.length
         }
+      }
 
-        acc.all += scriptFiles.length
-        return acc
-      },
-      initialVisibleDirs
-    )
+      _totalDirs += scriptFiles.length
+    })
 
-    setTotalVisibleDirs(total)
+    setTotalDirs(_totalDirs)
+    setTotalOpenDirs(_totalOpenDirs)
   }, [dirs, reposOpen, dirsOpen])
 
-  return totalVisibleDirs.all <= 0 ? null : (
+  return totalDirs <= 0 ? null : (
     <RepoDiv className="repo">
       <RepoNameContainer>
         <NameInnerContainer flex={1} content="name" onClick={handleOpen}>
@@ -96,7 +96,7 @@ const Repo: React.FC<PropTypes> = ({
         </NameInnerContainer>
       </RepoNameContainer>
 
-      <DirsDiv open={reposOpen[repoName]} count={totalVisibleDirs.open}>
+      <DirsDiv open={reposOpen[repoName]} count={totalOpenDirs}>
         {validDirNames.map((dirName, i) => {
           const dirContents = dirs[dirName]["."]
           return (
