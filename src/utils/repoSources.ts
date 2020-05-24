@@ -19,6 +19,10 @@ const repoSources: Array<RepoSource> = [
     name: "py",
     url: joinPath(repoAPI, "py"),
   },
+  {
+    name: "node-scripts",
+    url: joinPath(repoAPI, "node-scripts"),
+  },
 ]
 
 export default repoSources
