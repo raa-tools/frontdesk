@@ -64,3 +64,9 @@ export const SmallButton = styled(Button)`
   border-radius: 1.625rem;
   font-size: 0.875rem;
 `
+
+export const CircularButton = styled(Button)`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+`

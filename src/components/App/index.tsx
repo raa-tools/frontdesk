@@ -46,12 +46,21 @@ const App: React.FC<{}> = (): ReactElement => {
     filterRepos(target.value)
   }
 
+  const handleClearSearch = (): void => {
+    setSearchVal("")
+    filterRepos("")
+  }
+
   return (
     <>
       <Loading loading={loading} />
       <Container>
         <LeftSection>
-          <SearchArea value={searchVal} handleChange={handleSearch} />
+          <SearchArea
+            value={searchVal}
+            handleChange={handleSearch}
+            handleClear={handleClearSearch}
+          />
         </LeftSection>
         <RightSection>
           <Listing

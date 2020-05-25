@@ -1,26 +1,45 @@
 import React, { FC, ReactElement, KeyboardEvent } from "react"
 
-import { Title, Container, SearchBox, SearchFootnote, SearchA } from "./styles"
+import ClearButton from "../ClearButton"
+import {
+  Title,
+  Container,
+  InnerContainer,
+  SearchBoxDiv,
+  SearchBox,
+  SearchFootnote,
+  SearchA,
+} from "./styles"
 
 type PropTypes = {
   value: string
-  handleChange: (ev: KeyboardEvent) => void
+  handleChange(ev: KeyboardEvent): void
+  handleClear(): void
 }
 
-const SearchArea: FC<PropTypes> = ({ value, handleChange }): ReactElement => {
+const SearchArea: FC<PropTypes> = ({
+  value,
+  handleChange,
+  handleClear,
+}): ReactElement => {
   return (
     <Container>
-      <Title>Looking for something?</Title>
-      <SearchBox
-        placeholder="Start typing to filter the list on the right"
-        value={value}
-        onChange={handleChange}
-      />
-      <SearchFootnote>
-        If something isn’t working quite right or you need help installing a
-        script, please write to{" "}
-        <SearchA href="mailto:jesentanadi@raai.com">Jesen</SearchA>.
-      </SearchFootnote>
+      <InnerContainer>
+        <Title>Looking for something?</Title>
+        <SearchBoxDiv>
+          <SearchBox
+            placeholder="Start typing to filter the list on the right"
+            value={value}
+            onChange={handleChange}
+          />
+          <ClearButton onClick={handleClear} />
+        </SearchBoxDiv>
+        <SearchFootnote>
+          If something isn’t working quite right or you need help installing a
+          script, please write to{" "}
+          <SearchA href="mailto:jesentanadi@raai.com">Jesen</SearchA>.
+        </SearchFootnote>
+      </InnerContainer>
     </Container>
   )
 }
