@@ -12,13 +12,21 @@ export const Title = styled(H1)`
   line-height: 1.1;
 `
 
+export const SearchBoxDiv = styled.div`
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  margin-top: 1.75rem;
+`
+
 export const SearchBox = styled.input.attrs({
   type: "text",
 })`
-  width: 100%;
+  box-sizing: border-box;
   height: 2rem;
-  margin-top: 1.75rem;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  flex: 1;
+  padding: 0;
 
   &::placeholder {
     font-style: italic;
