@@ -7,6 +7,10 @@ export const Container = styled.div`
   width: 50%;
 `
 
+export const InnerContainer = styled.div`
+  margin-top: -1rem;
+`
+
 export const Title = styled(H1)`
   color: white;
   line-height: 1.1;
