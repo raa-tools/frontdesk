@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react"
-export default (repos): any[] => {
+
+type UseFilteredRepos = [any[], Function]
+
+export default (repos): UseFilteredRepos => {
   const [filteredRepos, setFilteredRepos] = useState([])
 
   useEffect(() => {

@@ -37,7 +37,10 @@ const SearchArea: FC<PropTypes> = ({
         <SearchFootnote>
           If something isn’t working quite right or you need help installing a
           script, please write to{" "}
-          <SearchA href="mailto:jesentanadi@raai.com">Jesen</SearchA>.
+          <SearchA href="mailto:jesentanadi@raai.com?subject=RTD Question">
+            Jesen
+          </SearchA>
+          .
         </SearchFootnote>
       </InnerContainer>
     </Container>

@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react"
 
-type UseDropdown = {
-  reposOpen: {}
-  handleRepoDropdown(repoName: string): void
-  dirsOpen: {}
-  handleDirDropdown(repoName: string, dirName: string): void
-}
+type UseDropdown = [{}, Function, {}, Function]
 
 export default (repos: any[]): UseDropdown => {
   const [reposOpen, setReposOpen] = useState({})
@@ -42,5 +37,5 @@ export default (repos: any[]): UseDropdown => {
     setDirsOpen(newState)
   }
 
-  return { reposOpen, handleRepoDropdown, dirsOpen, handleDirDropdown }
+  return [reposOpen, handleRepoDropdown, dirsOpen, handleDirDropdown]
 }

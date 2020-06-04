@@ -9,18 +9,20 @@ import DownloadButtonArea from "../DownloadButtonArea"
 import Listing from "../Listing"
 import SearchArea from "../SearchArea"
 import Loading from "../Loading"
+import ErrorModal from "../ErrorModal"
 
 // Styles
 import { Container, RightSection, LeftSection } from "./styles"
 
 const App: React.FC<{}> = (): ReactElement => {
-  const [repos, loading] = useRepos()
-  const {
+  const [errors, repos, loading] = useRepos()
+
+  const [
     reposOpen,
     handleRepoDropdown,
     dirsOpen,
     handleDirDropdown,
-  } = useDropdown(repos)
+  ] = useDropdown(repos)
 
   const [downloadPaths, setDownloadPaths] = useState<CheckedList>({})
   const handleSelect = (id: string, checked: boolean): void => {
@@ -61,9 +63,21 @@ const App: React.FC<{}> = (): ReactElement => {
     }
   }, [repos.length])
 
+  const renderErrorModal = (): ReactElement => {
+    if (errors.length) {
+      const messages = errors.map(
+        error => `Error fetching ${error.repoName} from ${error.repoUrl}.`
+      )
+
+      return <ErrorModal title="Fetching error" messages={messages} />
+    }
+    return null
+  }
+
   return (
     <>
       <Loading loading={loading} />
+      {renderErrorModal()}
       <Container>
         <LeftSection>
           <SearchArea
