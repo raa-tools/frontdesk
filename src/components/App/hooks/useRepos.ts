@@ -3,7 +3,9 @@ import { useEffect, useState } from "react"
 import repoSources, { ziplineAPI } from "../../../utils/repoSources"
 import joinPath from "../../../utils/joinPath"
 
-export default (): any[] => {
+type UseRepos = [any[], boolean]
+
+export default (): UseRepos => {
   const [loading, setLoading] = useState(true)
   const [repos, setRepos] = useState([])
   useEffect((): void => {

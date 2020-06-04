@@ -15,12 +15,12 @@ import { Container, RightSection, LeftSection } from "./styles"
 
 const App: React.FC<{}> = (): ReactElement => {
   const [repos, loading] = useRepos()
-  const {
+  const [
     reposOpen,
     handleRepoDropdown,
     dirsOpen,
     handleDirDropdown,
-  } = useDropdown(repos)
+  ] = useDropdown(repos)
 
   const [downloadPaths, setDownloadPaths] = useState<CheckedList>({})
   const handleSelect = (id: string, checked: boolean): void => {
