@@ -44,12 +44,22 @@ const App: React.FC<{}> = (): ReactElement => {
     const target = ev.target as HTMLInputElement
     setSearchVal(target.value)
     filterRepos(target.value)
+    location.hash = target.value
   }
 
   const handleClearSearch = (): void => {
     setSearchVal("")
     filterRepos("")
+    location.hash = ""
   }
+
+  useEffect(() => {
+    const hash = location.hash.replace(/^#/, "")
+    if (hash) {
+      setSearchVal(hash)
+      filterRepos(hash)
+    }
+  }, [repos.length])
 
   return (
     <>
