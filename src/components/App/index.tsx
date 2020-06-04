@@ -50,6 +50,7 @@ const App: React.FC<{}> = (): ReactElement => {
   const handleClearSearch = (): void => {
     setSearchVal("")
     filterRepos("")
+    location.hash = ""
   }
 
   useEffect(() => {
