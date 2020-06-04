@@ -17,8 +17,8 @@ const DownloadButton: FC<PropTypes> = ({ paths }): ReactElement => {
   const [queryString, setQueryString] = useState("")
   useEffect(() => {
     const downloadQuery = Object.keys(paths).reduce((acc, key, i) => {
-      const { repo, dirName, file } = JSON.parse(key)
-      const query = `user=raa-tools&repo=${repo}&file=${dirName}%2F${file}`
+      const { repoName, dirName, file } = JSON.parse(key)
+      const query = `user=raa-tools&repo=${repoName}&file=${dirName}%2F${file}`
       if (i === 0) {
         acc = query
       } else {

@@ -1,6 +1,6 @@
 {
   "name": "raa-scripts-landing",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Landing page for RAA scripts",
   "main": "index.html",
   "scripts": {
