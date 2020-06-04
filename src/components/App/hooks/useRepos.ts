@@ -3,11 +3,12 @@ import { useEffect, useState } from "react"
 import repoSources, { ziplineAPI } from "../../../utils/repoSources"
 import joinPath from "../../../utils/joinPath"
 
-type UseRepos = [any[], boolean]
+type UseRepos = [any[], any[], boolean]
 
 export default (): UseRepos => {
   const [loading, setLoading] = useState(true)
   const [repos, setRepos] = useState([])
+  const [errors, setErrors] = useState([])
   useEffect((): void => {
     const loadRepos = async (): Promise<void> => {
       // Ping zipline to wake server up
@@ -21,9 +22,10 @@ export default (): UseRepos => {
             return [...prev, { name: source.name, dirs: json }]
           })
         } catch (e) {
-          console.error(
-            `Something went wrong while fetching ${source.name} at ${source.url}\n${e}`
-          )
+          setErrors(prev => [
+            ...prev,
+            { repoName: source.name, repoUrl: source.url },
+          ])
         }
       }
 
@@ -32,5 +34,5 @@ export default (): UseRepos => {
     loadRepos()
   }, [])
 
-  return [repos, loading]
+  return [errors, repos, loading]
 }
