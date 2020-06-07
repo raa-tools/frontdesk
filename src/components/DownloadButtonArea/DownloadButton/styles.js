@@ -1,22 +1,23 @@
 import styled from "styled-components"
 
-import { Button } from "../../globals"
+import { Button, COLORS } from "../../globals"
 
 export const DownloadAnchor = styled.a`
   margin: auto;
 `
 
 export const DownloadBtn = styled(Button)`
-  background-color: #17ba4f;
-  color: white;
+  background-color: ${COLORS.GREEN};
+  color: ${COLORS.WHITE};
   transition: background-color ease 0.35s;
 
-  &:hover {
-    background-color: #0f983d;
+  &:hover,
+  &:focus {
+    background-color: ${COLORS.DARK_GREEN};
   }
 
   &:disabled {
-    background-color: #c2c2c2;
+    background-color: ${COLORS.MID_GRAY};
     cursor: not-allowed;
   }
 `

@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components"
+import { COLORS } from "../globals"
 
 export const Container = styled.div`
   width: 100%;
@@ -6,7 +7,7 @@ export const Container = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #043051;
+  background-color: ${COLORS.NAVY};
   display: flex;
   z-index: 99;
 

@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import { H3, P, SmallButton } from "../globals"
+import { H3, P, SmallButton, COLORS } from "../globals"
 
 export const Island = styled.div`
   box-sizing: border-box;
@@ -9,7 +9,7 @@ export const Island = styled.div`
   max-width: 675px;
   margin: auto;
   padding: 2rem;
-  background-color: white;
+  background-color: ${COLORS.WHITE};
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
@@ -36,7 +36,12 @@ export const Message = styled(P)`
 `
 
 export const CloseButton = styled(SmallButton)`
-  background-color: red;
-  color: white;
+  background-color: ${COLORS.RED};
+  color: ${COLORS.WHITE};
   margin: 1.5rem auto 0 auto;
+
+  &:hover,
+  &:focus {
+    background-color: ${COLORS.DARK_RED};
+  }
 `

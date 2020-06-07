@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components"
 
+import { COLORS } from "../globals"
+
 export const Container = styled.div`
   height: 3rem;
   margin-left: 2rem;
-  border-bottom: 2px solid #e4e4e4;
+  border-bottom: 2px solid ${COLORS.LIGHT_GRAY};
   display: flex;
   box-sizing: border-box;
 `
@@ -47,15 +49,15 @@ export const StyledInput = styled.input.attrs({
   opacity: 0;
 
   &:hover ~ .custom-checkbox {
-    background-color: #c2c2c2;
+    background-color: ${COLORS.MID_GRAY};
   }
 
   &:checked ~ .custom-checkbox {
-    background-color: #17ba4f;
+    background-color: ${COLORS.GREEN};
   }
 
   &:checked:hover ~ .custom-checkbox {
-    background-color: #0f983d;
+    background-color: ${COLORS.DARK_GREEN};
   }
 
   &:checked ~ .custom-checkbox:after {
@@ -68,7 +70,7 @@ export const CustomCheckbox = styled.span`
   width: 1rem;
   height: 1rem;
   border-radius: 0.125rem;
-  background-color: #e4e4e4;
+  background-color: ${COLORS.LIGHT_GRAY};
   top: 1rem;
   left: 0;
 
@@ -80,7 +82,7 @@ export const CustomCheckbox = styled.span`
     left: 5px;
     width: 4px;
     height: 10px;
-    border: solid white;
+    border: solid ${COLORS.WHITE};
     border-width: 0 2px 2px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);

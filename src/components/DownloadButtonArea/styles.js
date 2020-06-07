@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components"
 
+import { COLORS } from "../globals"
+
 export const Container = styled.div`
   width: calc(50% - 1rem);
   height: 6.5rem;
@@ -8,7 +10,7 @@ export const Container = styled.div`
   bottom: 0;
   display: flex;
   z-index: 33;
-  background-color: white;
+  background-color: ${COLORS.WHITE};
   transition: transform ease 0.5s;
 
   ${props =>
@@ -26,7 +28,7 @@ export const InnerContainer = styled.div`
 export const ClearSelection = styled.button`
   padding: 0;
   border: none;
-  background-color: white;
+  background-color: ${COLORS.WHITE};
   display: block;
   margin: 0.5rem auto 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;

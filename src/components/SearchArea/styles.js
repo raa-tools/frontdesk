@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-import { H1, Footnote, A } from "../globals"
+import { H1, Footnote, A, COLORS } from "../globals"
 
 export const Container = styled.div`
   margin: auto auto auto 16.67%;
@@ -12,7 +12,7 @@ export const InnerContainer = styled.div`
 `
 
 export const Title = styled(H1)`
-  color: white;
+  color: ${COLORS.WHITE};
   line-height: 1.1;
 `
 
@@ -38,14 +38,14 @@ export const SearchBox = styled.input.attrs({
 `
 
 export const SearchFootnote = styled(Footnote)`
-  color: white;
+  color: ${COLORS.WHITE};
   margin-top: 1.75rem;
 `
 
 export const SearchA = styled(A)`
-  color: white;
+  color: ${COLORS.WHITE};
 
   &:visited {
-    color: white;
+    color: ${COLORS.WHITE};
   }
 `

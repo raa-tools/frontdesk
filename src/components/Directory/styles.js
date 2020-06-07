@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
-import { H3 } from "../globals"
+import { H3, COLORS } from "../globals"
 
 export const ScriptNameContainer = styled.div`
   height: 3rem;
-  border-bottom: 2px solid #e4e4e4;
+  border-bottom: 2px solid ${COLORS.LIGHT_GRAY};
   display: flex;
   justify-content: space-between;
   user-select: none;
