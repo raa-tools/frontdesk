@@ -1,7 +1,7 @@
 {
-  "name": "raa-scripts-landing",
-  "version": "1.2.1",
-  "description": "Landing page for RAA scripts",
+  "name": "raa-tools-directory",
+  "version": "1.2.2",
+  "description": "RAA Tools Directory",
   "main": "index.html",
   "scripts": {
     "dev": "parcel ./src/index.html --out-dir ./dev",
