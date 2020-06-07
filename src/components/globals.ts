@@ -1,5 +1,20 @@
 import styled from "styled-components"
 
+export enum COLORS {
+  GREEN = "#17BA4F",
+  DARK_GREEN = "#0F983D",
+  BLUE = "#35A9EA",
+  DARK_BLUE = "#1886C5",
+  NAVY = "#043051",
+  RED = "#EE4C4C",
+  DARK_RED = "#CA3030",
+  LIGHT_GRAY = "#E4E4E4",
+  MID_GRAY = "#C2C2C2",
+  DARK_GRAY = "#999999",
+  WHITE = "#FFFFFF",
+  BLACK = "#000000",
+}
+
 export const H1 = styled.h1`
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 3.375rem;
@@ -36,14 +51,15 @@ export const Footnote = styled(P)`
 `
 
 export const A = styled.a`
-  color: black;
+  color: ${COLORS.BLACK};
 
-  &:hover {
+  &:hover,
+  &:focus {
     text-decoration: none;
   }
 
   &:visited {
-    color: black;
+    color: ${COLORS.BLACK};
   }
 `
 
