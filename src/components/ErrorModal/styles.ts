@@ -27,7 +27,7 @@ export const Cover = styled.div`
 `
 
 export const Title = styled(H3)`
-  color: red;
+  color: ${COLORS.RED};
   margin-bottom: 1rem;
 `
 
